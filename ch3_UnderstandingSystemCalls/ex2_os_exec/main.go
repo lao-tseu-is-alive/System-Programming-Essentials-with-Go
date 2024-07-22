@@ -12,7 +12,7 @@ func main() {
 	// Start a new process
 	cmd := exec.Command("ls", "-al", "-tr") // list files in reverse order of modification time
 	cmd.Stdin = strings.NewReader(".")
-	var out strings.Builder
+	var out strings.Builder // store the output in case we want to analyse it
 	cmd.Stdout = &out
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()

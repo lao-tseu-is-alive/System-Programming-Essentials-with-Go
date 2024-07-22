@@ -52,3 +52,10 @@ The os package provides a more user-friendly way to interact with the operating 
 + os.Exit(): Exit the current process
 + os.Signal: Represents signals (for example, SIGINT, SIGTERM)
 + os/signal.Notify(): Notify on signal reception
+
+### key points:
++ use the os package for most tasks, as it provides a safer and portable interface to the underlying operating system.
++ use the golang.org/x/sys/unix package for low-level system calls and constants.
++ avoid using the syscall package, as it has been deprecated in favor of the golang.org/x/sys/unix package.
++ handle errors returned by system calls to ensure the robustness of your application.
++ test your code to ensure that it works as expected across different architectures and operating systems.
