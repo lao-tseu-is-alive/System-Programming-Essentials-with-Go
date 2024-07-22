@@ -10,5 +10,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("💥💥 Error writing to stdout with unix.Write: %v", err)
 	}
-	log.Printf("Successfull write of %d Bytes to stdout\n", write)
+	log.Printf("✅✅ Successfull write of %d Bytes to stdout\n", write)
 }

@@ -1,4 +1,4 @@
-module ch3
+module ch3_UnderstandingSystemCalls
 
 go 1.22
 
