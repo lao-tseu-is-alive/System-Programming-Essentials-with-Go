@@ -7,24 +7,29 @@ import (
 	"os"
 )
 
+const APP = "MyGOCliApp"
+const Version = "0.0.2"
+
+var l *log.Logger
+
 type CliConfig struct {
 	ErrStream, OutStream io.Writer
 }
 
 func app(words []string, cfg CliConfig) {
-	for _, w := range words {
+	for i, w := range words {
 		if len(w)%2 == 0 {
-			nBytesWritten, err := fmt.Fprintf(cfg.OutStream, "word %s is even\n", w)
+			nBytesWritten, err := fmt.Fprintf(cfg.OutStream, "[%4d] word '%s' is even\n", i+1, w)
 			if err != nil {
-				log.Fatalf("💥💥 Error writing to cfg.OutStream: %v", err)
+				l.Fatalf("💥💥 Error writing to cfg.OutStream: %v", err)
 			}
-			log.Printf("Successfull write of %d Bytes to cfg.OutStream\n", nBytesWritten)
+			l.Printf("Successfull write of %d Bytes to cfg.OutStream\n", nBytesWritten)
 		} else {
-			nBytesWritten, err := fmt.Fprintf(cfg.ErrStream, "word %s is odd\n", w)
+			nBytesWritten, err := fmt.Fprintf(cfg.ErrStream, "[%4d] word '%s' is odd\n", i+1, w)
 			if err != nil {
-				log.Fatalf("💥💥 Error writing to cfg.ErrStream: %v", err)
+				l.Fatalf("💥💥 Error writing to cfg.ErrStream: %v", err)
 			}
-			log.Printf("Successfull write of %d Bytes to cfg.ErrStream\n", nBytesWritten)
+			l.Printf("Successfull write of %d Bytes to cfg.ErrStream\n", nBytesWritten)
 		}
 	}
 }
@@ -61,12 +66,14 @@ func WithOutStream(outStream io.Writer) Option {
 
 func main() {
 	words := os.Args[1:]
+	l = log.New(os.Stdout, fmt.Sprintf("%s ", APP), log.Ldate|log.Ltime|log.Lshortfile)
+	l.Printf("🚀🚀 Starting App %s, v%s :", APP, Version)
 	if len(words) == 0 {
 		nBytesWritten, err := fmt.Fprintln(os.Stderr, "No words provided.")
 		if err != nil {
-			log.Fatalf("💥💥 Error writing to stderr: %v", err)
+			l.Fatalf("💥💥 Error writing to stderr: %v", err)
 		}
-		log.Printf("Successfull write of %d Bytes to stderr\n", nBytesWritten)
+		l.Printf("Successfull write of %d Bytes to stderr\n", nBytesWritten)
 		os.Exit(1)
 	}
 
@@ -74,9 +81,9 @@ func main() {
 	if err != nil {
 		nBytesWritten, err := fmt.Fprintf(os.Stderr, "Error creating config: %v\n", err)
 		if err != nil {
-			log.Fatalf("💥💥 Error writing to stderr: %v", err)
+			l.Fatalf("💥💥 Error writing to stderr: %v", err)
 		}
-		log.Printf("Successfull write of %d Bytes to stderr\n", nBytesWritten)
+		l.Printf("Successfull write of %d Bytes to stderr\n", nBytesWritten)
 		os.Exit(1)
 	}
 
