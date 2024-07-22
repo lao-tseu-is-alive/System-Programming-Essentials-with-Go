@@ -6,30 +6,35 @@ import (
 	"os"
 )
 
+const APP = "MyGOCliApp"
+const Version = "0.0.1"
+
 func main() {
 	words := os.Args[1:]
+	l := log.New(os.Stdout, fmt.Sprintf("%s ", APP), log.Ldate|log.Ltime|log.Lshortfile)
+	l.Printf("🚀🚀 Starting App %s, v%s :", APP, Version)
 	if len(words) == 0 {
 		nBytesWritten, err := fmt.Fprintln(os.Stderr, "No words provided.")
 		if err != nil {
-			log.Fatalf("💥💥 Error writing to stderr: %v", err)
+			l.Fatalf("💥💥 Error writing to stderr: %v", err)
 		}
-		log.Printf("Successfull write of %d Bytes to stderr\n", nBytesWritten)
+		l.Printf("## Successfull write of %d Bytes to stderr\n", nBytesWritten)
 		os.Exit(1)
 	}
 
-	for _, w := range words {
+	for i, w := range words {
 		if len(w)%2 == 0 {
-			nBytesWritten, err := fmt.Fprintf(os.Stdout, "word %s is even\n", w)
+			nBytesWritten, err := fmt.Fprintf(os.Stdout, "[%4d] word '%s' is even\n", i+1, w)
 			if err != nil {
-				log.Fatalf("💥💥 Error writing to stderr: %v", err)
+				l.Fatalf("💥💥 Error writing to Stdout: %v", err)
 			}
-			log.Printf("Successfull write of %d Bytes to Stdout\n", nBytesWritten)
+			l.Printf("✅ ✅ Successfull  write of %d Bytes to Stdout\n", nBytesWritten)
 		} else {
-			nBytesWritten, err := fmt.Fprintf(os.Stderr, "word %s is odd\n", w)
+			nBytesWritten, err := fmt.Fprintf(os.Stderr, "[%4d] word '%s' is odd\n", i+1, w)
 			if err != nil {
-				log.Fatalf("💥💥 Error writing to Stdout: %v", err)
+				l.Fatalf("💥💥 Error writing to Stderr: %v", err)
 			}
-			log.Printf("Successfull write of %d Bytes to stdout\n", nBytesWritten)
+			l.Printf("✅ ✅ Successfull  write of %d Bytes to Stderr\n", nBytesWritten)
 		}
 	}
 }
