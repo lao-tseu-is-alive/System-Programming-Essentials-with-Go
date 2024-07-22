@@ -16,7 +16,7 @@ type CliConfig struct {
 	ErrStream, OutStream io.Writer
 }
 
-func app(words []string, cfg CliConfig) {
+func app(words []string, cfg CliConfig, l *log.Logger) {
 	for i, w := range words {
 		if len(w)%2 == 0 {
 			nBytesWritten, err := fmt.Fprintf(cfg.OutStream, "[%4d] word '%s' is even\n", i+1, w)
@@ -87,5 +87,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	app(words, cfg)
+	app(words, cfg, l)
 }
