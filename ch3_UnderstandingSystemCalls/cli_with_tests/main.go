@@ -23,13 +23,13 @@ func app(words []string, cfg CliConfig) {
 			if err != nil {
 				l.Fatalf("💥💥 Error writing to cfg.OutStream: %v", err)
 			}
-			l.Printf("Successfull write of %d Bytes to cfg.OutStream\n", nBytesWritten)
+			l.Printf("✅ ✅ Successfull write of %d Bytes to cfg.OutStream\n", nBytesWritten)
 		} else {
 			nBytesWritten, err := fmt.Fprintf(cfg.ErrStream, "[%4d] word '%s' is odd\n", i+1, w)
 			if err != nil {
 				l.Fatalf("💥💥 Error writing to cfg.ErrStream: %v", err)
 			}
-			l.Printf("Successfull write of %d Bytes to cfg.ErrStream\n", nBytesWritten)
+			l.Printf("✅ ✅ Successfull write of %d Bytes to cfg.ErrStream\n", nBytesWritten)
 		}
 	}
 }
@@ -73,7 +73,7 @@ func main() {
 		if err != nil {
 			l.Fatalf("💥💥 Error writing to stderr: %v", err)
 		}
-		l.Printf("Successfull write of %d Bytes to stderr\n", nBytesWritten)
+		l.Printf("## Successfull write of %d Bytes to stderr\n", nBytesWritten)
 		os.Exit(1)
 	}
 
@@ -83,7 +83,7 @@ func main() {
 		if err != nil {
 			l.Fatalf("💥💥 Error writing to stderr: %v", err)
 		}
-		l.Printf("Successfull write of %d Bytes to stderr\n", nBytesWritten)
+		l.Printf("✅ ✅ Successfull write of %d Bytes to stderr\n", nBytesWritten)
 		os.Exit(1)
 	}
 
